@@ -1,7 +1,8 @@
 # daptordarattler.is-a.dev
 
-Personal CV / portfolio site for Dominic Fui Dodzi-Nusenu, hosted at
-[**daptordarattler.is-a.dev**](https://daptordarattler.is-a.dev).
+Personal CV / portfolio site for Dominic Fui Dodzi-Nusenu — senior software
+engineer and technical lead with 15+ years of active development experience
+(coding since 2005). Hosted at [**daptordarattler.is-a.dev**](https://daptordarattler.is-a.dev).
 
 ## Stack
 
