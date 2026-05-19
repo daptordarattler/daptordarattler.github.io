@@ -3,8 +3,8 @@
     "username": "daptordarattler",
     "email": "dfdnusenu@gmail.com"
   },
-  "record": {
-    "CNAME": "daptordarattler.github.io."
+  "records": {
+    "CNAME": "daptordarattler.github.io"
   },
   "proxied": true
 }
