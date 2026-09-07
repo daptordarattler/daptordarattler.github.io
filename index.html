@@ -30,6 +30,9 @@
     // If nothing stored, leave data-theme unset so the @media rule + system
     // preference decides — that is the intended default.
     (function () {
+      // Marks that JS is available. Reveal animations are scoped to .js so the
+      // page renders fully visible when scripting is off.
+      document.documentElement.className += ' js';
       try {
         var stored = localStorage.getItem('theme');
         if (stored === 'light' || stored === 'dark') {
@@ -42,7 +45,30 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <div class="progress" aria-hidden="true"><span class="progress__bar"></span></div>
+
   <header class="hero">
+    <svg class="hero__graph" aria-hidden="true" viewBox="0 0 400 260" fill="none" preserveAspectRatio="xMidYMid meet">
+      <g class="hero__graph-links" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+        <path pathLength="1" d="M38 208 L120 146 L204 176 L286 92 L364 124" />
+        <path pathLength="1" d="M38 208 L108 62 L204 176" />
+        <path pathLength="1" d="M108 62 L200 34 L286 92" />
+        <path pathLength="1" d="M204 176 L252 232 L340 214 L364 124" />
+        <path pathLength="1" d="M200 34 L318 40 L364 124" />
+      </g>
+      <g class="hero__graph-nodes" fill="currentColor">
+        <circle cx="38" cy="208" r="3.4" />
+        <circle cx="120" cy="146" r="2.6" />
+        <circle cx="108" cy="62" r="2.6" />
+        <circle cx="200" cy="34" r="3.4" />
+        <circle cx="204" cy="176" r="4.2" />
+        <circle cx="286" cy="92" r="2.6" />
+        <circle cx="318" cy="40" r="2.6" />
+        <circle cx="252" cy="232" r="2.6" />
+        <circle cx="340" cy="214" r="2.6" />
+        <circle cx="364" cy="124" r="3.4" />
+      </g>
+    </svg>
     <div class="container">
       <div class="hero__top">
         <div class="hero__mark" aria-hidden="true">
@@ -75,12 +101,15 @@
       </div>
 
       <div class="hero__intro">
-        <img class="hero__photo" src="assets/photo.jpg" width="440" height="550"
-             alt="Dominic Fui Dodzi-Nusenu" loading="eager" decoding="async" />
+        <div class="hero__photo-wrap" data-reveal data-reveal-group="hero">
+          <img class="hero__photo" src="assets/photo.jpg" width="440" height="550"
+               alt="Dominic Fui Dodzi-Nusenu" loading="eager" decoding="async" />
+          <span class="hero__photo-frame" aria-hidden="true"></span>
+        </div>
         <div class="hero__intro-text">
-        <p class="hero__eyebrow">Senior Software Engineer · Technical Lead · Cloud &amp; AI Infrastructure</p>
-        <h1 class="hero__name">Dominic Fui Dodzi-Nusenu</h1>
-        <p class="hero__tagline">
+        <p class="hero__eyebrow" data-reveal data-reveal-group="hero"><span class="hero__prompt" aria-hidden="true">&gt;</span> Senior Software Engineer · Technical Lead · Cloud &amp; AI Infrastructure<span class="caret" aria-hidden="true"></span></p>
+        <h1 class="hero__name" data-reveal data-reveal-group="hero">Dominic Fui Dodzi-Nusenu</h1>
+        <p class="hero__tagline" data-reveal data-reveal-group="hero">
           <span class="accent">15+ years</span> shipping production software across
           <span class="accent">fintech</span>, <span class="accent">AI governance</span>,
           and <span class="accent">asset management</span> — from Grails monoliths to
@@ -88,7 +117,7 @@
           professional since 2011.
         </p>
 
-        <ul class="hero__contacts" role="list">
+        <ul class="hero__contacts" role="list" data-reveal data-reveal-group="hero">
           <li>
             <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
             <span>Koblenz, Germany</span>
@@ -118,18 +147,18 @@
   </header>
 
   <main id="main" class="container">
-    <section id="summary" class="section">
-      <h2 class="section__title">Professional Summary</h2>
-      <p class="prose">
+    <section id="summary" class="section section--flush">
+      <h2 class="section__title" data-reveal>Professional Summary</h2>
+      <p class="prose" data-reveal data-reveal-group="summary">
         Full-stack software engineer and technical lead with <strong>15+ years</strong> of active development
-        experience — started coding in 2005 and have been shipping production software professionally since 2011.
+        experience — started coding in 2005 and have been shipping production software professionally since 2011 — <strong>8+ of those years in regulated finance</strong>.
         Architect and deliver enterprise-grade platforms across fintech, AI governance, and asset management, with
         a proven track record designing multi-tenant SaaS systems, leading cross-functional engineering teams, and
         shipping products end-to-end — from Grails/Java backends and React/Angular frontends to Flutter mobile apps
         and Rust/Go desktop tools. I am a self-taught engineer — no computer science degree; every
         language and system here was learned by building something real in production with it.
       </p>
-      <p class="prose">
+      <p class="prose" data-reveal data-reveal-group="summary">
         Deep expertise in DevOps, cloud infrastructure (Linux, Docker, Kubernetes, LXD/Incus), and building
         intelligent automation platforms integrating large language models. Currently building an EU AI Act
         compliance platform targeting European fintech regulation, and an AI agent orchestration system for
@@ -137,34 +166,46 @@
       </p>
     </section>
 
-    <section id="skills" class="section">
-      <h2 class="section__title">Core Competencies</h2>
+    <!-- decorative: data-flow rule -->
+    <div class="divider" aria-hidden="true" data-reveal>
+      <svg class="divider__art" viewBox="0 0 1080 34" fill="none" preserveAspectRatio="xMidYMid meet">
+        <line class="divider__rule" x1="0" y1="17" x2="1080" y2="17" stroke="currentColor" stroke-width="1" />
+        <line class="divider__wire" x1="404" y1="17" x2="676" y2="17" stroke="currentColor" stroke-width="1.5"
+              stroke-dasharray="6 7" stroke-linecap="round" />
+        <rect class="divider__pod" x="386" y="11" width="12" height="12" rx="3" fill="currentColor" />
+        <rect class="divider__pod" x="682" y="11" width="12" height="12" rx="3" fill="currentColor" />
+        <circle class="divider__packet" cx="0" cy="17" r="3.2" fill="currentColor" />
+      </svg>
+    </div>
+
+    <section id="skills" class="section section--flush">
+      <h2 class="section__title" data-reveal>Core Competencies</h2>
       <div class="skills">
-        <div class="skill-card">
+        <div class="skill-card" data-reveal data-reveal-group="skills">
           <h3>Languages</h3>
           <ul class="chips" role="list">
             <li>Groovy/Java</li><li>Python</li><li>TypeScript</li><li>Dart</li><li>Rust</li><li>Go</li><li>Elixir</li><li>JavaScript</li><li>PHP</li><li>Bash</li>
           </ul>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-reveal data-reveal-group="skills">
           <h3>Backend</h3>
           <ul class="chips" role="list">
             <li>Grails</li><li>FastAPI</li><li>Flask</li><li>Phoenix LiveView</li><li>Express</li><li>Axum</li><li>Spring Boot</li><li>gRPC/Protobuf</li>
           </ul>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-reveal data-reveal-group="skills">
           <h3>Frontend &amp; Mobile</h3>
           <ul class="chips" role="list">
             <li>React</li><li>Angular</li><li>Next.js</li><li>Flutter (7+ apps)</li><li>Wails</li><li>GTK</li>
           </ul>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-reveal data-reveal-group="skills">
           <h3>Infrastructure</h3>
           <ul class="chips" role="list">
             <li>Linux/systemd</li><li>Docker</li><li>Kubernetes</li><li>Traefik</li><li>LXD/Incus</li><li>Ansible</li><li>PostgreSQL</li><li>tmux orchestration</li>
           </ul>
         </div>
-        <div class="skill-card">
+        <div class="skill-card" data-reveal data-reveal-group="skills">
           <h3>Practices</h3>
           <ul class="chips" role="list">
             <li>CI/CD</li><li>TDD</li><li>Playwright E2E</li><li>Agile/Scrum/Kanban</li><li>Multi-tenant Architecture</li><li>AI/LLM Integration</li><li>ML Observability</li>
@@ -173,10 +214,32 @@
       </div>
     </section>
 
-    <section id="experience" class="section">
-      <h2 class="section__title">Professional Experience</h2>
+    <!-- decorative: branch / merge graph -->
+    <div class="divider divider--git" aria-hidden="true" data-reveal>
+      <svg class="divider__art" viewBox="0 0 1080 68" fill="none" preserveAspectRatio="xMidYMid meet">
+        <path class="git__trunk" pathLength="1" d="M0 34 H1080" stroke="currentColor" stroke-width="1.5" />
+        <path class="git__branch" pathLength="1" d="M232 34 C 268 34 272 12 308 12 H 420 C 456 12 460 34 496 34"
+              stroke="currentColor" stroke-width="1.5" fill="none" />
+        <path class="git__branch git__branch--b" pathLength="1" d="M576 34 C 612 34 616 56 652 56 H 728 C 764 56 768 34 804 34"
+              stroke="currentColor" stroke-width="1.5" fill="none" />
+        <g class="git__commits" fill="currentColor">
+          <circle cx="152" cy="34" r="4" />
+          <circle cx="308" cy="12" r="4" />
+          <circle cx="420" cy="12" r="4" />
+          <circle cx="496" cy="34" r="4" />
+          <circle cx="652" cy="56" r="4" />
+          <circle cx="728" cy="56" r="4" />
+          <circle cx="804" cy="34" r="4" />
+          <circle cx="936" cy="34" r="5" />
+        </g>
+      </svg>
+    </div>
 
-      <article class="job">
+    <section id="experience" class="section section--flush">
+      <h2 class="section__title" data-reveal>Professional Experience</h2>
+
+      <article class="job job--live" data-reveal>
+        <span class="job__pulse" aria-hidden="true"></span>
         <header class="job__header">
           <div>
             <h3 class="job__role">Co-Founder &amp; CTO</h3>
@@ -195,7 +258,7 @@
         </ul>
       </article>
 
-      <article class="job">
+      <article class="job" data-reveal>
         <header class="job__header">
           <div>
             <h3 class="job__role">Founder &amp; Technical Lead</h3>
@@ -219,7 +282,7 @@
         </ul>
       </article>
 
-      <article class="job">
+      <article class="job" data-reveal>
         <header class="job__header">
           <div>
             <h3 class="job__role">Technical Lead / Senior Software Engineer</h3>
@@ -236,7 +299,7 @@
         </ul>
       </article>
 
-      <article class="job">
+      <article class="job" data-reveal>
         <header class="job__header">
           <div>
             <h3 class="job__role">Founder &amp; CTO</h3>
@@ -250,7 +313,7 @@
         </ul>
       </article>
 
-      <article class="job">
+      <article class="job" data-reveal>
         <header class="job__header">
           <div>
             <h3 class="job__role">Co-Founder &amp; CTO</h3>
@@ -264,7 +327,7 @@
         </ul>
       </article>
 
-      <article class="job">
+      <article class="job" data-reveal>
         <header class="job__header">
           <div>
             <h3 class="job__role">Co-Founder &amp; CTO</h3>
@@ -282,7 +345,7 @@
         </ul>
       </article>
 
-      <article class="job">
+      <article class="job" data-reveal>
         <header class="job__header">
           <div>
             <h3 class="job__role">Software Engineering Intern</h3>
@@ -298,20 +361,47 @@
       </article>
     </section>
 
-    <section id="projects" class="section">
-      <h2 class="section__title">Notable Projects</h2>
+    <!-- decorative: service topology -->
+    <div class="divider divider--arch" aria-hidden="true" data-reveal>
+      <svg class="divider__art" viewBox="0 0 1080 76" fill="none" preserveAspectRatio="xMidYMid meet">
+        <line class="divider__rule" x1="0" y1="38" x2="352" y2="38" stroke="currentColor" stroke-width="1" />
+        <line class="divider__rule" x1="728" y1="38" x2="1080" y2="38" stroke="currentColor" stroke-width="1" />
+        <g class="arch__wire" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round">
+          <path pathLength="1" d="M436 38 H 484" />
+          <path pathLength="1" d="M540 38 H 644" />
+          <path pathLength="1" d="M512 24 V 10 H 674 V 24" />
+          <path pathLength="1" d="M512 52 V 66 H 406 V 52" />
+        </g>
+        <g class="arch__nodes" stroke="currentColor" stroke-width="1.5" fill="none">
+          <rect x="376" y="24" width="60" height="28" rx="7" />
+          <rect x="484" y="24" width="56" height="28" rx="7" />
+          <rect x="644" y="24" width="60" height="28" rx="7" />
+        </g>
+        <g class="arch__glyphs" fill="currentColor" opacity="0.85">
+          <rect x="392" y="34" width="28" height="2" rx="1" />
+          <rect x="392" y="40" width="16" height="2" rx="1" />
+          <rect x="498" y="34" width="28" height="2" rx="1" />
+          <rect x="498" y="40" width="18" height="2" rx="1" />
+          <rect x="660" y="34" width="28" height="2" rx="1" />
+          <rect x="660" y="40" width="14" height="2" rx="1" />
+        </g>
+      </svg>
+    </div>
+
+    <section id="projects" class="section section--flush">
+      <h2 class="section__title" data-reveal>Notable Projects</h2>
       <div class="projects">
-        <article class="project">
+        <article class="project" data-reveal data-reveal-group="projects">
           <h3>PayPro OMS</h3>
           <p class="project__stack">Grails · React · Flutter</p>
           <p>Multi-tenant workforce management SaaS for private security companies. Features order management, mobile attendance tracking, and payroll integration.</p>
         </article>
-        <article class="project">
+        <article class="project" data-reveal data-reveal-group="projects">
           <h3>Alleina AI Platform</h3>
           <p class="project__stack">FastAPI · React · Turborepo · gRPC</p>
           <p>EU AI Act compliance SaaS with automated risk classification, bias detection, explainability scoring, and multi-language SDKs for enterprise ML pipeline integration.</p>
         </article>
-        <article class="project">
+        <article class="project" data-reveal data-reveal-group="projects">
           <h3>Soupmarkets</h3>
           <p class="project__stack">Grails/Groovy · Angular · Flutter · USSD</p>
           <p>Multi-tenant asset management and brokerage platform deployed across 9 production instances, with Angular client portal, Flutter mobile app, USSD channel, WhatsApp bot, and SDKs in 3 languages.</p>
@@ -320,18 +410,18 @@
     </section>
 
     <section id="education" class="section">
-      <h2 class="section__title">Education</h2>
+      <h2 class="section__title" data-reveal>Education</h2>
       <div class="education">
-        <article class="edu">
+        <article class="edu" data-reveal data-reveal-group="education">
           <h3>BSc Information Technology</h3>
           <p class="edu__school">University of Ghana, Legon</p>
           <p class="edu__period">2023 – 2028 (expected, part-time)</p>
         </article>
-        <article class="edu">
+        <article class="edu" data-reveal data-reveal-group="education">
           <h3>BSc Geological Engineering <span class="edu__note">(Incomplete)</span></h3>
           <p class="edu__school">Kwame Nkrumah University of Science and Technology (KNUST), Kumasi, Ghana</p>
         </article>
-        <article class="edu">
+        <article class="edu" data-reveal data-reveal-group="education">
           <h3>Entrepreneur in Training (EIT)</h3>
           <p class="edu__school">MEST — Meltwater Entrepreneurial School of Technology</p>
           <p class="edu__period">Software development, business, and communications</p>
@@ -342,6 +432,7 @@
 
   <footer class="footer">
     <div class="container">
+      <p class="footer__prompt" aria-hidden="true"><span class="footer__sigil">~/</span>dominic <span class="footer__branch">git:(main)</span> <span class="caret"></span></p>
       <p>© <span id="year"></span> Dominic Fui Dodzi-Nusenu · <a href="mailto:dfdnusenu@gmail.com">dfdnusenu@gmail.com</a></p>
       <p class="footer__meta">Hosted on <a href="https://www.is-a.dev" target="_blank" rel="noopener">is-a.dev</a> · Source on <a href="https://github.com/daptordarattler" target="_blank" rel="noopener">GitHub</a></p>
     </div>
@@ -389,6 +480,105 @@
       });
 
       syncLabel();
+    })();
+
+    /* ------------------------------------------------------------------
+       Motion layer. Everything here is progressive enhancement:
+       with JS off the .js class is never set, so nothing is hidden.
+       ------------------------------------------------------------------ */
+    (function () {
+      var reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var items = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+
+      function revealAll() {
+        for (var i = 0; i < items.length; i++) items[i].classList.add('is-in');
+      }
+
+      if (reduceMQ.matches || !('IntersectionObserver' in window)) {
+        revealAll();
+      } else {
+        // Stagger members of a named group so lists don't pop in unison.
+        var counts = {};
+        items.forEach(function (el) {
+          var g = el.getAttribute('data-reveal-group');
+          if (!g) return;
+          counts[g] = counts[g] || 0;
+          el.style.setProperty('--reveal-delay', Math.min(counts[g] * 70, 420) + 'ms');
+          counts[g]++;
+        });
+
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-in');
+            io.unobserve(entry.target);
+          });
+        }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
+
+        items.forEach(function (el) { io.observe(el); });
+
+        // If the observer somehow never fires, don't leave content invisible.
+        window.setTimeout(function () {
+          items.forEach(function (el) {
+            var r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('is-in');
+          });
+        }, 2500);
+      }
+
+      if (reduceMQ.addEventListener) {
+        reduceMQ.addEventListener('change', function () {
+          if (reduceMQ.matches) revealAll();
+        });
+      }
+
+      // Scroll-spy for the section nav.
+      var links = Array.prototype.slice.call(document.querySelectorAll('.hero__nav a'));
+      var sections = links
+        .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+        .filter(Boolean);
+
+      if (sections.length && 'IntersectionObserver' in window) {
+        var visible = new Set();
+        var spy = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) visible.add(entry.target.id);
+            else visible.delete(entry.target.id);
+          });
+          var active = null;
+          for (var i = 0; i < sections.length; i++) {
+            if (visible.has(sections[i].id)) { active = sections[i].id; break; }
+          }
+          links.forEach(function (a) {
+            var on = active && a.getAttribute('href') === '#' + active;
+            a.classList.toggle('is-current', !!on);
+            if (on) a.setAttribute('aria-current', 'true');
+            else a.removeAttribute('aria-current');
+          });
+        }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+        sections.forEach(function (s) { spy.observe(s); });
+      }
+
+      // Reading-progress rule. Direct scroll mapping, no easing.
+      var bar = document.querySelector('.progress__bar');
+      if (bar) {
+        var pending = false;
+        var paint = function () {
+          pending = false;
+          var doc = document.documentElement;
+          var max = doc.scrollHeight - window.innerHeight;
+          var p = max > 0 ? Math.min(1, Math.max(0, window.pageYOffset / max)) : 0;
+          bar.style.transform = 'scaleX(' + p + ')';
+        };
+        var onScroll = function () {
+          if (pending) return;
+          pending = true;
+          window.requestAnimationFrame(paint);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        paint();
+      }
     })();
   </script>
 </body>
