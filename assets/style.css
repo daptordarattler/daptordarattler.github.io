@@ -499,3 +499,25 @@ a:hover { color: var(--accent); }
   .chips li { background: #f5f5f5; }
   a { color: black; text-decoration: underline; }
 }
+
+
+/* ---------- hero portrait ---------- */
+.hero__intro {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+.hero__intro-text { min-width: 0; flex: 1 1 auto; }
+.hero__photo {
+  flex: 0 0 auto;
+  width: 148px;
+  height: 185px;
+  object-fit: cover;
+  object-position: center 22%;
+  border-radius: 10px;
+  order: 2;
+}
+@media (max-width: 720px) {
+  .hero__intro { flex-direction: column; gap: 1.25rem; }
+  .hero__photo { order: -1; width: 112px; height: 140px; }
+}
